@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p id="text">这是一段英文：Use the switch context button in the upper left corner of this page to switch between your personal context (ChangeXuan) and organizations you are a member of.</p>
+    </body>
+</html>
+<script src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
+<script>
+    
+    document.onmouseup = function(){
+        var text = window.getSelection().toString();
+        console.log(text)
+        $.ajax({
+               
+               url: "http://fanyi.baidu.com/v2transapi",
+               dataType: "jsonp",
+               data: {
+               'from':'en',
+               'query':text,
+               'to':'zh'
+               },
+               jsonp:"cb",
+               cache:false,
+               success: function(data){
+               console.log(data.trans_result.data[0].dst)
+               alert(data.trans_result.data[0].dst)
+               },
+               error:function(){
+               alert("翻译失败，请检查你的网络，我的程序是不会有问题的！")
+               }
+               })
+    }
+</script>
